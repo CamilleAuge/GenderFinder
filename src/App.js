@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import ScreenGender from "./ScreenGender";
+import ScreenHome from "./ScreenHome";
+import ScreenResult from "./ScreenResult";
+
+import { Provider } from "react-redux";
+import { createStore, combineReducers } from "redux";
+import name from "./reducers/name";
+import age from "./reducers/age";
+
+const store = createStore(combineReducers({ name, age }));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={ScreenHome} />
+          <Route path="/gender" component={ScreenGender} />
+          <Route path="/result" component={ScreenResult} />
+        </Switch>
+      </Router>
+    </Provider>
   );
 }
 
